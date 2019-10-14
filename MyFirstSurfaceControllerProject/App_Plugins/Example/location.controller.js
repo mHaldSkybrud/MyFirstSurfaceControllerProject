@@ -1,6 +1,6 @@
 ﻿angular.module("umbraco").controller("Example.LocationController",
 
-    function ($scope, assetsService, notificationsService) 
+    function ($scope, assetsService, notificationsService) {
 
         //API
         assetsService.loadJs("http://www.google.com/jsapi")
