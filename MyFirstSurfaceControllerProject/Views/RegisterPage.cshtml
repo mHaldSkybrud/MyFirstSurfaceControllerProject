@@ -1,0 +1,13 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.RegisterPage>
+@using ContentModels = Umbraco.Web.PublishedModels;
+@using MyFirstSurfaceControllerProject.Models;
+@{
+	Layout = "master.cshtml";
+}
+
+<div>
+    <h3>@Model.Value("bodyText")</h3>
+</div>
+
+<!--render registration form-->
+@Html.Partial("RegisterPartial", new RegisterModel())

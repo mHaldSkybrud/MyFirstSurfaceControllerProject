@@ -1,0 +1,24 @@
+﻿@model MyFirstSurfaceControllerProject.Models.ImageGalleryFormViewModel
+
+
+@if (TempData["success"] == null)
+{
+    using (Html.BeginUmbracoForm<MyFirstSurfaceControllerProject.Controllers.ImageGalleryController>("HandleFormSubmit"))
+    {
+        @Html.HiddenFor(m => m.GalleryId)
+
+        <div class="controls">
+            <input type="file" name="Files" multiple />
+            @Html.ValidationMessageFor(m => m.Files)
+
+        </div>
+        
+        <div class="controls">
+            <button id="gallery-submit" type="submit" class="btn btn-primary input-sm pull-left">Add Images</button>
+        </div>
+    }
+}
+else
+{
+    <p>Files have been uploaded!</p>
+}

@@ -1,0 +1,13 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+@{
+    Layout = "master.cshtml";
+}
+
+<div id="panel">
+    <h1>@Model.Name</h1>
+        
+        @Html.Action("Index", "CommentFormSurface")
+
+</div>

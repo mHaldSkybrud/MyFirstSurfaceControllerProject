@@ -1,0 +1,29 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using ContentModels = Umbraco.Web.PublishedModels;
+@using Umbraco.Web.Models;
+@using Umbraco.Core.Services;
+
+
+@{
+    Layout = "master.cshtml";
+}
+
+<div style="margin-top: 40px;" class="row">
+    <div class="col-4 offset-1">
+        <h2>@Model.Value("title")</h2>
+    </div>
+    @{
+        var media = Model.Value<IPublishedContent>("gallery");
+        foreach (var item in media.Children)
+        {
+            <div class="gallery">
+                <img src="@item.Url.GetCropUrl(width: 600, height: 400, preferFocalPoint: true, imageCropMode: ImageCropMode.Pad)">
+            </div>
+        }
+
+        <div>
+            @Html.Action("Index", "ImageGallery")
+        </div>
+    }
+</div>
+

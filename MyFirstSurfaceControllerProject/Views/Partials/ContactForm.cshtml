@@ -1,0 +1,30 @@
+﻿@model MyFirstSurfaceControllerProject.Models.ContactFormViewModel
+
+@if (TempData["success"] == null)
+{
+
+    using (Html.BeginUmbracoForm<MyFirstSurfaceControllerProject.Controllers.ContactFormSurfaceController>("HandleFormSubmit"))
+    {
+        <div class="controls controls-row">
+            @Html.TextBoxFor(m => m.Name, new { @class = "col-sm-5", placeholder = "Name" })
+            @Html.ValidationMessageFor(m => m.Name)
+
+            @Html.TextBoxFor(m => m.Email, new { @class = "col-sm-5", placeholder = "Email address" })
+            @Html.ValidationMessageFor(m => m.Email)
+
+        </div>
+        <div class="controls">
+            @Html.TextAreaFor(m => m.Message, new { @class = "col-sm-12", placeholder = "Your message", rows = "5" })
+            @Html.ValidationMessageFor(m => m.Message)
+
+        </div>
+
+        <div class="controls">
+            <button id="contact-submit" class="btn btn-primary input-lg pull-right">Send</button>
+        </div>
+    }
+}
+else
+{
+    <i>We'll be in touch!</i>
+}

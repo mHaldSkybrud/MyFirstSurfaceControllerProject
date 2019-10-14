@@ -1,0 +1,41 @@
+{
+  "propertyEditors": [
+
+    {
+      "alias": "charLimit",
+      "name": "Char Limit",
+      "editor": {
+        "view": "~/App_Plugins/Example/charlimit.editor.html"
+      },
+      "prevalues": {
+        "fields": [
+          {
+            "label": "Number of chars",
+            "description": "The maximum number of chars allowed",
+            "key": "limit",
+            "view": "number"
+          }
+        ]
+      },
+      "isParameterEditor": true,
+      "defaultConfig": {
+        "limit": 150
+      }
+    },
+    {
+      "alias": "Location",
+      "name": "Location",
+      "isParameterEditor": true,
+      "editor": 
+      {
+        "view": "~/App_Plugins/Example/location.editor.html",
+          "valueType": "JSON"
+      }
+    }
+  ],
+
+  "javascript": [
+    "~/App_Plugins/Example/charlimit.controller.js",
+    "~/App_Plugins/Example/location.controller.js"
+  ]
+}

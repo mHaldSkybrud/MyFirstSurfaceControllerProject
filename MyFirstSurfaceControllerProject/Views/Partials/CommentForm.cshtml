@@ -1,0 +1,36 @@
+﻿@model MyFirstSurfaceControllerProject.Models.CommentFormViewModel
+
+@if (TempData["success"] == null)
+{
+    using (Html.BeginUmbracoForm<MyFirstSurfaceControllerProject.Controllers.CommentFormSurfaceController>("HandleFormSubmit"))
+    {
+        <div class="controls controls-row">
+            @Html.TextBoxFor(m => m.Title, new { @class = "col-sm-12", placeholder = "Post title" })
+            @Html.ValidationMessageFor(m => m.Title)
+            
+        </div>
+
+        <div class="controls controls-row">
+            @Html.TextBoxFor(m => m.Author, new { @class = "col-sm-5", placeholder = "Author Name" })
+            @Html.ValidationMessageFor(m => m.Author)
+
+            @Html.TextBoxFor(m => m.Email, new { @class = "col-sm-5", placeholder = "Email address" })
+            @Html.ValidationMessageFor(m => m.Email)
+
+        </div>
+
+        <div class="controls">
+            @Html.TextAreaFor(m => m.Comment, new { @class = "col-sm-12", placeholder = "Comment", rows = "5" })
+            @Html.ValidationMessageFor(m => m.Comment)
+
+        </div>
+
+        <div class="controls">
+            <button id="comment-submit" class="btn btn-primary input-lg pull-right">Send</button>
+        </div>
+    }
+}
+else
+{
+    <i>Comment saved!</i>
+}

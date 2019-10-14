@@ -1,0 +1,55 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using ContentModels = Umbraco.Web.PublishedModels;
+@using Newtonsoft.Json.Linq;
+
+
+@*Jquery populating an unordered list with the data from the API Controller. *@
+<script>
+    $(document).ready(function () {
+        //Send AJAX request
+        $.getJSON('/umbraco/api/ProductsApi/GetAllproducts')
+            .done(function (data) {
+                //On success, data contains a list of products
+                $.each(data, function (key, item) {
+                    //Add a list item for the product to the tag marked with the products-id.
+                    $('<li>', { text: formatItem(item) }).appendTo($('#products'));
+                });
+            });
+    });
+
+    function formatItem(item) {
+        return item.Name + ': €' + item.Price;
+    }
+</script>
+
+@{
+    Layout = "master.cshtml";
+    var locProp = Model.GetProperty("loc");
+}
+
+<h1>@Model.Value("title")</h1>
+
+<p>
+    @Html.Raw(Model.Value("mainContent"))
+</p>
+
+@Umbraco.RenderMacro("intro", new {intro=""})
+<div>
+    <h2>All products (listed using the ProductsApiController)</h2>
+    <ul id="products" />
+</div>
+<i>Below should be the Google Maps API <br /> rendered map from the backoffice, rendered via macro.</i>
+@Umbraco.RenderMacro("Example", new {loc=""})
+
+@*Instead of CurrentPage.loc.latitude, use Newtonsoft.Json to
+  do the following and convert the Json to a string
+    since CurrentPage nolonger exists in Umbraco 8*@
+@{ 
+    JObject coords = JObject.Parse(Model.Value("loc").ToString());
+}
+
+<h3>@coords["latitude"] , @coords["longitude"] </h3>
+
+
+
+

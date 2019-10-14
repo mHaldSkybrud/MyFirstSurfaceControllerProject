@@ -1,0 +1,13 @@
+﻿<div ng-controller="Example.LocationController">
+
+    <div id="floating-panel">
+        <input id="address" type="text" value="Sydney, NSW">
+        <input id="submit" type="button" value="Geocode">
+    </div>
+    <div id="map" style="height: 400px"></div>
+
+    lat: <input type="text" ng-model="model.value.latitude" /> <br />
+    long: <input type="text" ng-model="model.value.longitude" />
+
+    {{model.value | json }}
+</div>
