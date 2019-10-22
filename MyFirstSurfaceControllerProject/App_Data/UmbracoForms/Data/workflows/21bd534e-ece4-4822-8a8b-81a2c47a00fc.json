@@ -1,0 +1,16 @@
+{
+  "id": "21bd534e-ece4-4822-8a8b-81a2c47a00fc",
+  "name": "Send template email to mhald@skybrud.dk",
+  "form": "ac5ffe4d-f4af-412e-9f4c-e9958a740fa4",
+  "active": true,
+  "workflowTypeId": "17c61629-d984-4e86-b43b-a8407b3efea9",
+  "executesOn": "Submitted",
+  "settings": {
+    "Email": "mhald@skybrud.dk",
+    "SenderEmail": "",
+    "Subject": "The Form '{form_name}' was submitted",
+    "RazorViewFilePath": "Forms/Emails/Example-Template.cshtml",
+    "Attachment": ""
+  },
+  "sortOrder": 1
+}

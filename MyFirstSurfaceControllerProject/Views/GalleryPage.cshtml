@@ -1,29 +1,85 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
 @using ContentModels = Umbraco.Web.PublishedModels;
 @using Umbraco.Web.Models;
-@using Umbraco.Core.Services;
+@using RedirectResult = System.Web.Http.Results.RedirectResult
 
 
 @{
     Layout = "master.cshtml";
 }
 
-<div style="margin-top: 40px;" class="row">
-    <div class="col-4 offset-1">
-        <h2>@Model.Value("title")</h2>
-    </div>
-    @{
-        var media = Model.Value<IPublishedContent>("gallery");
-        foreach (var item in media.Children)
-        {
-            <div class="gallery">
-                <img src="@item.Url.GetCropUrl(width: 600, height: 400, preferFocalPoint: true, imageCropMode: ImageCropMode.Pad)">
-            </div>
-        }
 
-        <div>
-            @Html.Action("Index", "ImageGallery")
-        </div>
-    }
+@*----First gallery done through media service----*@
+
+<div style="margin-top: 40px;" class="row">
+    <div>
+        <h2>@Model.Value("title") - MediaService upload</h2>
+    </div>
+    @*Display images in Gallery folder*@
+    <div>
+        @{
+            var media = Model.Value<IPublishedContent>("gallery");
+            foreach (var item in media.Children)
+            {
+                <div class="gallery">
+                    <img src="@item.Url.GetCropUrl(width: 300, height: 200, preferFocalPoint: true, imageCropMode: ImageCropMode.Pad)">
+                </div>
+            }
+        }
+    </div>
+
+</div>
+<div style="margin-top: 40px;" class="row">
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="file" />
+        <input type="submit" value="Upload Image" name="submit" />
+    </form>
 </div>
 
+@*Actually uploading the image*@
+
+@if (IsPost)
+{
+
+    // Get a reference to the uploaded file
+    HttpPostedFileBase file = Request.Files["file"];
+
+    // Did the user actually select a file?
+    if (file != null)
+    {
+
+
+        // Initialize a new image at the root of the media archive
+        IMedia image = Services.MediaService.CreateMedia(file.FileName, 1088, "Image");
+
+        // Set the property value (Umbraco will handle the underlying magic)
+        image.SetValue(Services.ContentTypeBaseServices, "umbracoFile", file.FileName, file);
+
+        // Save the media
+        Services.MediaService.Save(image);
+    }
+
+}
+
+
+@*----Uploading through Umbraco Forms----
+    !!!Important!!! Umbraco Form's upload path is hardcoded.
+    Unsure how to render images from form entries.*@
+
+
+
+<div style="margin-top: 40px;" class="row">
+    <h2 class="col-10">@Model.Value("title") - Umbraco Forms Upload</h2>
+    @Umbraco.RenderMacro("renderUmbracoForm", new { FormGuid = "ac5ffe4d-f4af-412e-9f4c-e9958a740fa4", FormTheme = "", ExcludeScripts = "1" })
+</div>
+
+
+
+
+@if (TempData["UmbracoForms"] != null)
+{
+    foreach (var form in (List<Guid>)TempData["UmbracoForms"])
+    {
+        Html.RenderAction("RenderFormScripts", "UmbracoForms", new { formid = form, theme = "yourTheme" });
+    }
+}

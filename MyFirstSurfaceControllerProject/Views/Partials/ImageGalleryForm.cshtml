@@ -1,24 +1,27 @@
-﻿@model MyFirstSurfaceControllerProject.Models.ImageGalleryFormViewModel
+﻿@*@model MyFirstSurfaceControllerProject.Models.ImageGalleryFormViewModel
 
 
 @if (TempData["success"] == null)
+
 {
-    using (Html.BeginUmbracoForm<MyFirstSurfaceControllerProject.Controllers.ImageGalleryController>("HandleFormSubmit"))
+    IDictionary<string, object> dictionary = new Dictionary<string, object>
     {
-        @Html.HiddenFor(m => m.GalleryId)
-
-        <div class="controls">
-            <input type="file" name="Files" multiple />
-            @Html.ValidationMessageFor(m => m.Files)
-
-        </div>
-        
-        <div class="controls">
-            <button id="gallery-submit" type="submit" class="btn btn-primary input-sm pull-left">Add Images</button>
-        </div>
+        {
+            "enctype", "multipart/form-data"
+        }
+    };
+    using (Html.BeginUmbracoForm<MyFirstSurfaceControllerProject.Controllers.ImageGalleryController>("HandleFormSubmit", null, dictionary))
+    {
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <input type="submit" value="Upload Image" name="submit" />
+        </form>
     }
+
+
 }
 else
 {
+
     <p>Files have been uploaded!</p>
-}
+}*@
