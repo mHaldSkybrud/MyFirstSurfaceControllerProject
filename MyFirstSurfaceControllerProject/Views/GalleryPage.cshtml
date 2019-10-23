@@ -57,6 +57,9 @@
 
         // Save the media
         Services.MediaService.Save(image);
+
+        // Redirect to current page for refresh
+        Response.Redirect(@Model.Url);
     }
 
 }
